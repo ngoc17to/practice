@@ -1,0 +1,108 @@
+.success-button{
+    background-color: var(--success-btn-color);
+    border: 2px solid var(--success-color);
+}
+
+.success-button:hover{
+    background-color: var(--success-btn-hover-color);
+}
+  
+.warning-button{
+    background-color: var(--warning-btn-color); 
+    border: 2px solid var(--warning-color);
+}
+.warning-button:hover{
+    background-color: var(--warning-btn-hover-color);
+}
+  
+.error-button{
+    background-color: var(--error-btn-color);
+    border: 2px solid var(--error-color);
+}
+
+.error-button:hover{
+    background-color: var(--error-btn-hover-color);
+}
+.toast-container{
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    width: fit-content;
+    height: fit-content;
+}
+
+.toast-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: fit-content;
+    color: var(--text-color);
+}
+  
+@keyframes slide {
+    from {
+      transform: translateX(100px);
+    }
+    to {
+      transform: translateX(0);
+    }
+}
+  
+.success{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--success-color);
+    margin-top: 5px;
+    border-radius: 5px;
+    padding-left: 10px;
+    animation: slide linear 0.2s;
+    box-shadow: 10px 10px 30px 5px rgba(0, 0, 0, 0.3);
+}
+  
+.warning{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--warning-color);
+    margin-top: 5px;
+    border-radius: 5px;
+    padding-left: 10px;
+    animation: slide linear 0.2s;
+    box-shadow: 10px 10px 30px 5px rgba(0, 0, 0, 0.3);
+}
+  
+.error{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--error-color);
+    margin-top: 5px;
+    border-radius: 5px;
+    padding-left: 10px;
+    animation: slide linear 0.2s;
+    box-shadow: 10px 10px 30px 5px rgba(0, 0, 0, 0.3);
+}
+
+.toast-close-button{
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  margin-right: 5px;
+}
+  
+.toast-close-button:hover{
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+.toast-icon{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
