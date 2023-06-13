@@ -81,6 +81,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = ({ options, defaultValue, is
         {
             const idx = focusedIndex - 1;
             ItemClickHandler(options[idx].id, options[idx].label);
+            SetDropdownMenuVisible(true);
         }
         setFocusIndex(nextIndexCount);
     };
