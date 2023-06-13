@@ -36,9 +36,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = ({ options, defaultValue, is
                     const currentValueList: {id: string, label: string}[] = valueList;
                     currentValueList.push({ id: id, label: label });
                     setValueList(currentValueList);
-
                 }
-            
             }
             else
             {
@@ -71,22 +69,41 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = ({ options, defaultValue, is
 
         // move down
         if (key === 'ArrowDown')
-        {nextIndexCount = (focusedIndex + 1) % (options.length + 1);}
+        {
+            nextIndexCount = (focusedIndex + 1) % (options.length + 1);
+            setFocusIndex(nextIndexCount);
+        }
 
         // move up
         if (key === 'ArrowUp')
-        {nextIndexCount = (focusedIndex + options.length - 1) % (options.length);}
+        {
+            nextIndexCount = (focusedIndex + options.length - 1) % (options.length);
+            setFocusIndex(nextIndexCount);
+        }
 
         if (key === 'Enter')
         {
-            const idx = focusedIndex - 1;
-            ItemClickHandler(options[idx].id, options[idx].label);
-            SetDropdownMenuVisible(true);
+            if (focusedIndex > 0)
+            {
+                const idx = focusedIndex - 1;
+                ItemClickHandler(options[idx].id, options[idx].label);
+                SetDropdownMenuVisible(true);
+
+            }
+            setFocusIndex(0);
         }
-        setFocusIndex(nextIndexCount);
+        if (key === 'Backspace')
+        {
+            if (valueList.length > 0)
+            {
+                DeselectItemHandler(valueList[valueList.length - 1].id);
+            }
+            SetDropdownMenuVisible(true);
+            setFocusIndex(focusedIndex);
+        }
     };
     return (
-        <>
+        <div onClick={() => SetDropdownMenuVisible(false)}>
             <div className='select-wrapper'>
                 <div
                     tabIndex={0}
@@ -161,7 +178,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = ({ options, defaultValue, is
                 }
 
             </div>
-        </>
+        </div>
     );
 };
 export default AdvanceSelect;
