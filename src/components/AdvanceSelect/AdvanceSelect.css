@@ -1,5 +1,11 @@
-.select-wrapper {
+.select-container{
   width: fit-content;
+}
+.select-wrapper {
+  width: 700px;
+}
+.disable-select{
+  pointer-events:none;
 }
 .select-showValue {
   border: 1px solid var(--btn-border-color);
@@ -7,19 +13,19 @@
   color: var(--text-color);
   box-sizing: border-box;
   border-radius: 5px;
-  width: 500px;
-  height: 35px;
+  width: 100%;
+  height: max-content;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 10px;
-  padding-right: 10px;
   position: relative;
-  z-index: 0;
+  padding-left: 5px;
+  padding-right: 5px;
 }
-.select-showValue div {
+.select-content{
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 .select-items {
@@ -31,20 +37,23 @@
   border: 1px solid var(--btn-border-color);
   background-color: var(--modal-color);
   color: var(--text-color);
-  width: 500px;
+  width: 700px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   box-shadow: 10px 10px 30px 5px rgba(0, 0, 0, 0.3);
 }
+.select-icon{
+  display: flex;
+  align-items: center;
+}
 .item {
-  width: 498px;
+  width: calc(100% - 2px);
   height: 35px;
   display: flex;
   align-items: center;
 }
 .item-tick {
-  padding-right: 5px;
   width: 25px;
   height: 25px;
 }
@@ -68,11 +77,12 @@
   background-color: rgba(100, 116, 139, 0.6);
 }
 .value-list {
+  display: flex;
   width: fit-content;
   background-color: rgb(0, 176, 255);
   padding-left: 5px;
   color: #fff;
-  margin-right: 5px;
+  margin: 5px 0px 5px 5px;
 }
 .deselect-btn {
   background-color: transparent;
@@ -84,4 +94,12 @@
   border-radius: 50%;
   color: #fff;
   z-index: 999;
+}
+input{
+  border: 0;
+  height: 40px;
+  width: max-content;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
 }

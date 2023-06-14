@@ -1,83 +1,135 @@
 import React from 'react';
 import '../../App.css';
 import './AdvanceSelect.css';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { BsCaretDown, BsCaretUp, BsCheck } from 'react-icons/bs';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useTheme } from '../../ThemeContext';
+import { AdvanceSelectOption } from './type';
 
 type AdvanceSelectProps = {
-    options: {id: string, label: string}[]
-    defaultValue: {id: string, label: string} | null
-    isMultiple: boolean
+    options: AdvanceSelectOption[]
+    placeholder?: string
+    defaultValue?: string[]
+    isMultiple?: boolean
+    disable?: boolean
 }
-const AdvanceSelect: React.FC<AdvanceSelectProps> = ({ options, defaultValue, isMultiple }) =>
+
+const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
 {
+    const { options, defaultValue = [], isMultiple, placeholder, disable } = props;
+
     const { theme } = useTheme();
-    const [valueList, setValueList] = useState<{id: string, label: string}[]>(defaultValue ? [defaultValue] : []);
-    const [DropdownMenuVisible, SetDropdownMenuVisible] = useState<boolean>(false);
-    const [focusedIndex, setFocusIndex] = useState(-1);
-    const ItemClickHandler = (id: string, label: string) =>
+
+    const [valueList, setValueList] = useState<string[]>(defaultValue);
+    const [dropdownMenuVisible, setDropdownMenuVisible] = useState<boolean>(false);
+    const [focusedIndex, setFocusIndex] = useState(0);
+    const [showOptions, setShowOptions] = useState<AdvanceSelectOption[]>(options);
+    const [message, setMessage] = useState<string>('');
+
+    const selectRef = useRef<any>();
+
+    useEffect(() =>
+    {
+        const checkIfClickedOutside = (e: MouseEvent) =>
+        {
+            console.log(selectRef.current);
+            console.log(e.target);
+            const a = e.target;
+            if (dropdownMenuVisible && selectRef.current && !selectRef.current.contains(a))
+            {
+                setDropdownMenuVisible(false);
+            }
+        };
+        document.addEventListener('click', e => checkIfClickedOutside(e));
+        return () =>
+        {
+            document.removeEventListener('click', e=> checkIfClickedOutside(e));
+        };
+    }, [dropdownMenuVisible]);
+
+    const itemClickHandler = (id: string) =>
     {
         if (isMultiple)
         {
             if (valueList)
             {
-                if (valueList.some(element => element.id === id))
+                if (valueList.some(element => element === id))
                 {
-                    setValueList(currentValueList =>
-                    {
-                        return currentValueList.filter((currentValueList) => currentValueList.id !== id);
-                    });
+                    
+                    let currentValueList: string[] = valueList;
+                    currentValueList = currentValueList.filter((currentValueList) => currentValueList !== id);
+                    setValueList(currentValueList);
 
                 }
                 else
                 {
-                    const currentValueList: {id: string, label: string}[] = valueList;
-                    currentValueList.push({ id: id, label: label });
+                    const currentValueList: string[] = valueList;
+                    currentValueList.push(id);
                     setValueList(currentValueList);
                 }
             }
             else
             {
-                setValueList([{ id: id, label: label }]);
+                setValueList([id]);
             }
         }
         else
         {
-            setValueList([{ id: id, label: label }]);
+            setValueList([id]);
         }
-        SetDropdownMenuVisible(false);
+        setDropdownMenuVisible(false);
     };
-    const ClearItemHandler = () =>
+
+    const clearItemHandler = (event: React.MouseEvent<HTMLElement>) =>
     {
         setValueList([]);
-        SetDropdownMenuVisible(false);
+        event.stopPropagation();
     };
-    const DeselectItemHandler = (id: string) =>
+    const textInputHandle = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) =>
+    {
+        console.log('a');
+        if (event.target.value.length > 0)
+        {
+            event.stopPropagation();
+        }
+        const { target } = event;
+        const filterOption = options.filter((options) => options.label.toLocaleLowerCase().includes(target.value.toLowerCase()));
+        setShowOptions(filterOption);
+        setMessage(event.target.value);
+    };
+
+    
+    const deselectItemHandler = (id: string) =>
     {
         setValueList(currentValueList =>
         {
-            return currentValueList.filter((currentValueList) => currentValueList.id !== id);
+            return currentValueList.filter((currentValueList) => currentValueList !== id);
         });
-        SetDropdownMenuVisible(false);
     };
+
     const handleKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (e) =>
     {
+        console.log('b');
         const { key } = e;
-        let nextIndexCount = 0;
+        let nextIndexCount = 1;
 
         // move down
         if (key === 'ArrowDown')
         {
-            nextIndexCount = (focusedIndex + 1) % (options.length + 1);
+            nextIndexCount = (focusedIndex + 1) % (showOptions.length);
+            if (nextIndexCount === 0) {nextIndexCount = showOptions.length;}
             setFocusIndex(nextIndexCount);
         }
 
         // move up
         if (key === 'ArrowUp')
         {
-            nextIndexCount = (focusedIndex + options.length - 1) % (options.length);
+            nextIndexCount = (focusedIndex + showOptions.length - 1) % (showOptions.length);
+            
+            if (nextIndexCount === 0) {nextIndexCount = showOptions.length;}
             setFocusIndex(nextIndexCount);
         }
 
@@ -85,99 +137,123 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = ({ options, defaultValue, is
         {
             if (focusedIndex > 0)
             {
-                const idx = focusedIndex - 1;
-                ItemClickHandler(options[idx].id, options[idx].label);
-                SetDropdownMenuVisible(true);
-
+                itemClickHandler(showOptions[focusedIndex - 1].id);
             }
-            setFocusIndex(0);
+            setFocusIndex(focusedIndex);
         }
         if (key === 'Backspace')
         {
-            if (valueList.length > 0)
+            console.log(e);
+            if (valueList.length > 0 && message.length === 0)
             {
-                DeselectItemHandler(valueList[valueList.length - 1].id);
+                deselectItemHandler(valueList[valueList.length - 1]);
             }
-            SetDropdownMenuVisible(true);
             setFocusIndex(focusedIndex);
         }
+        setDropdownMenuVisible(true);
     };
     return (
-        <div onClick={() => SetDropdownMenuVisible(false)}>
+        <div
+            ref = {selectRef}
+            className='select-container'
+            style={disable ? { pointerEvents: 'none', opacity: '0.7' } : {}}
+        >
             <div className='select-wrapper'>
                 <div
                     tabIndex={0}
                     className='select-showValue'
-                    onKeyDown={handleKeyDown}
-                    onClick={() => SetDropdownMenuVisible(!DropdownMenuVisible)}
-                >{valueList.length !== 0
+                    onClick={(e) =>
+                    {
+                        setDropdownMenuVisible(!dropdownMenuVisible);
+                        e.stopPropagation();
+                    }}
+                >
+                    {isMultiple
                         ? (
-                            <div>
-                                {isMultiple
-                                    ? (
-                                        <div>
-                                            {valueList.map(({ id, label }) => (
-                                                <div
-                                                    key={id}
-                                                    className='value-list'
-                                                >{label}
-                                                    <button
-                                                        className='deselect-btn'
-                                                        onClick={() => DeselectItemHandler(id)}
-                                                    > <AiOutlineClose />
-                                                    </button>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )
-                                    : <div>{valueList[0].label}</div>
-                                }
+                            <div className='select-content'>
+                                {valueList.map((id) => (
+                                    <div
+                                        key={id}
+                                        className='value-list'
+                                    >{options[parseInt(id) - 1].label}
+                                        <button
+                                            className='deselect-btn'
+                                            onClick={(e) =>
+                                            {
+                                                deselectItemHandler(id);
+                                                e.stopPropagation();
+                                            }}
+                                        > <AiOutlineClose />
+                                        </button>
+                                    </div>
+                                ))}
+                                <input
+                                    type='text'
+                                    placeholder={valueList.length === 0 ? placeholder : ''}
+                                    tabIndex={0}
+                                    onChange={textInputHandle}
+                                    onKeyDown={handleKeyDown}
+                                />
                             </div>
                         )
-                        : <p style={{ opacity: '0.7' }}>Select an item ...</p>}
-                    <div>
+                        : (
+                            <div>{showOptions[parseInt(valueList[0]) - 1].label}
+                                <input
+                                    type='text'
+                                    placeholder={valueList.length === 0 ? placeholder : ''}
+                                    tabIndex={0}
+                                    onChange={textInputHandle}
+                                    onKeyDown={handleKeyDown}
+                                />
+                            </div>
+                        )
+                    }
+                    <div className='select-icon'>
                         {
-                            valueList
+                            valueList.length !== 0
                                 ? (
                                     <button
                                         className='clear-btn'
-                                        onClick={ClearItemHandler}
+                                        onClick={clearItemHandler}
                                     > <AiOutlineClose color={theme === 'dark' ? '#fff' : '#000'} />
                                     </button>
                                 )
                                 : <> </>
                         }
                         {
-                            DropdownMenuVisible ? <BsCaretUp /> : <BsCaretDown />
+                            dropdownMenuVisible ? <BsCaretUp /> : <BsCaretDown />
                         }
                     </div>
                 </div>
-                {
-                    DropdownMenuVisible
-                        ? (
-                            <div className='select-items'>
-                                {options.map(({ id, label }) => (
-                                    <div
-                                        key={id}
-                                        className='item'
-                                        style={{ backgroundColor: parseInt(id) === focusedIndex ? 'rgba(0,0,0,0.1)' : '' }}
-                                        onClick={() => ItemClickHandler(id, label)}
-                                        onMouseEnter={() => setFocusIndex(parseInt(id))}
-                                    >
-                                        <div className='item-tick'>
-                                            {
-                                                valueList.some(element => element.id === id) ? <BsCheck size="100%" /> : <></>
-                                            }
-                                        </div>
-                                        <p>{label}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        )
-                        : <></>
-                }
-
             </div>
+            {
+                dropdownMenuVisible
+                    ? (
+                        <div
+                            className='select-items'
+                            style={showOptions.length === 0 ? { display: 'none' } : {}}
+                        >
+                            {showOptions.map(({ id, label }) => (
+                                <div
+                                    key={id}
+                                    className='item'
+                                    style={{ backgroundColor: focusedIndex > 0 ? (id === showOptions[focusedIndex - 1].id ? 'rgba(0,0,0,0.1)' : '') : '' }}
+                                    onClick={() => itemClickHandler(id)}
+                                    onMouseEnter={() => setFocusIndex(parseInt(id))}
+                                >
+                                    <div className='item-tick'>
+                                        {
+                                            valueList.find(element => element === id) ? <BsCheck size="100%" /> : <></>
+                                        }
+                                    </div>
+                                    <p>{label}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )
+                    : <></>
+            }
+
         </div>
     );
 };

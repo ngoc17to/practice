@@ -8,6 +8,7 @@ import UploadImage from './components/UploadImage/UploadImage';
 import './App.css';
 import { useTheme } from './ThemeContext';
 import { BsFillBrightnessLowFill, BsFillMoonStarsFill } from 'react-icons/bs';
+import { AdvanceSelectOption } from './components/AdvanceSelect/type';
 
 const App: React.FC = () =>
 {
@@ -27,11 +28,14 @@ const App: React.FC = () =>
 
     ];
 
-    const options: {id: string, label: string}[] = [
+    const options: AdvanceSelectOption[] = [
         { id: '1', label: 'option 1' },
         { id: '2', label: 'option 2' },
         { id: '3', label: 'option 3' },
         { id: '4', label: 'option 4' },
+        { id: '5', label: 'huhuhuhuhuh' },
+        { id: '6', label: 'hihihihihihhhihi' },
+        { id: '7', label: 'hehehe' },
     ];
 
     return (
@@ -92,7 +96,8 @@ const App: React.FC = () =>
             <UploadImage src={''} />
             <AdvanceSelect
                 options={options}
-                defaultValue={options[1]}
+                defaultValue={['1', '2']}
+                placeholder = {'Vui lòng chọn...'}
                 isMultiple
             />
         </div>
