@@ -4,6 +4,7 @@ import '../../App.css';
 import './Toast.css';
 import { useTheme } from '../../ThemeContext';
 import { AiOutlineClose, AiFillCheckCircle, AiFillWarning, AiFillCloseCircle } from 'react-icons/ai';
+import { useLanguage } from '../../translate/LanguageTheme';
 
 type ToastProps = {
     toastList: {message: string, type: string, id:string}[]
@@ -12,6 +13,8 @@ type ToastProps = {
 const Toast: React.FC<ToastProps> = ({ toastList, deleteToast }) =>
 {
     const { theme } = useTheme();
+    const { t } = useLanguage();
+
     if (toastList !== null)
     {
         return (
@@ -34,7 +37,7 @@ const Toast: React.FC<ToastProps> = ({ toastList, deleteToast }) =>
                                             )
                                     }
                                 </div>
-                                <p>{message}</p>
+                                <p>{t(message)}</p>
                                 <button
                                     className="toast-close-button"
                                     onClick={() => deleteToast(id)}

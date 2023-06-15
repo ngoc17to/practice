@@ -59,6 +59,7 @@ button{
   border: 2px solid var(--btn-border-color);
   border-radius: 4px;
   margin: 5px;
+  height: 35px;
 }
 
 .button-default:hover{
@@ -73,10 +74,10 @@ button p{
 
 .mode_btn{
   background-color: transparent;
-  border: 0;
   position: fixed;
   top: 0;
   right: 0;
+  border: 0;
   width: 60px;
   height: 60px;
 }

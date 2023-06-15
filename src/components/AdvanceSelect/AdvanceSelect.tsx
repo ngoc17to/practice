@@ -6,6 +6,7 @@ import { BsCaretDown, BsCaretUp, BsCheck } from 'react-icons/bs';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useTheme } from '../../ThemeContext';
 import { AdvanceSelectOption } from './type';
+import { useLanguage } from '../../translate/LanguageTheme';
 
 type AdvanceSelectProps = {
     options: AdvanceSelectOption[]
@@ -20,6 +21,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
     const { options, defaultValue = [], isMultiple, placeholder, disable } = props;
 
     const { theme } = useTheme();
+    const { t } = useLanguage();
 
     const [valueList, setValueList] = useState<string[]>(defaultValue);
     const [dropdownMenuVisible, setDropdownMenuVisible] = useState<boolean>(false);
@@ -33,8 +35,6 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
     {
         const checkIfClickedOutside = (e: MouseEvent) =>
         {
-            console.log(selectRef.current);
-            console.log(e.target);
             const a = e.target;
             if (dropdownMenuVisible && selectRef.current && !selectRef.current.contains(a))
             {
@@ -90,7 +90,6 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
         event: React.ChangeEvent<HTMLInputElement>,
     ) =>
     {
-        console.log('a');
         if (event.target.value.length > 0)
         {
             event.stopPropagation();
@@ -112,7 +111,6 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
 
     const handleKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (e) =>
     {
-        console.log('b');
         const { key } = e;
         let nextIndexCount = 1;
 
@@ -143,7 +141,6 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
         }
         if (key === 'Backspace')
         {
-            console.log(e);
             if (valueList.length > 0 && message.length === 0)
             {
                 deselectItemHandler(valueList[valueList.length - 1]);
@@ -175,7 +172,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
                                     <div
                                         key={id}
                                         className='value-list'
-                                    >{options[parseInt(id) - 1].label}
+                                    >{t(options[parseInt(id) - 1].label)}
                                         <button
                                             className='deselect-btn'
                                             onClick={(e) =>
@@ -189,7 +186,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
                                 ))}
                                 <input
                                     type='text'
-                                    placeholder={valueList.length === 0 ? placeholder : ''}
+                                    placeholder={valueList.length === 0 ? (placeholder ? t(placeholder) : '') : ''}
                                     tabIndex={0}
                                     onChange={textInputHandle}
                                     onKeyDown={handleKeyDown}
@@ -200,7 +197,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
                             <div>{showOptions[parseInt(valueList[0]) - 1].label}
                                 <input
                                     type='text'
-                                    placeholder={valueList.length === 0 ? placeholder : ''}
+                                    placeholder={valueList.length === 0 ? (placeholder ? t(placeholder) : '') : ''}
                                     tabIndex={0}
                                     onChange={textInputHandle}
                                     onKeyDown={handleKeyDown}
@@ -246,7 +243,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
                                             valueList.find(element => element === id) ? <BsCheck size="100%" /> : <></>
                                         }
                                     </div>
-                                    <p>{label}</p>
+                                    <p>{t(label)}</p>
                                 </div>
                             ))}
                         </div>

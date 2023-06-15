@@ -7,12 +7,14 @@ import UploadImg from '../../img/upload.png';
 import { useTheme } from '../../ThemeContext';
 import useModal from '../../hooks/useModal';
 import EnlargeImage from './EnlargeImage';
+import { useLanguage } from '../../translate/LanguageTheme';
 type UploadImageProps = {
     src: string | null
 }
 const UploadImage: React.FC<UploadImageProps> = ({ src }) =>
 {
     const { theme } = useTheme();
+    const { t } = useLanguage();
     const { show, modalVisible } = useModal();
 
     const hiddenFileInput = useRef<HTMLInputElement>(null);
@@ -36,7 +38,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ src }) =>
         {
             setImgPreview(src);
         }
-        else {console.log('khong thanh cong');}
+        else {console.log('do not exist defaultImg');}
     }, []);
 
     const ChangeHandler = (
@@ -137,7 +139,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ src }) =>
                         alt='UploadImg'
                         width={'25px'}
                     />
-                    <p style={{ marginLeft: '5px' }}>Upload Image</p>
+                    <p style={{ marginLeft: '5px' }}>{t('Tải ảnh lên')}</p>
                 </button>
 
 

@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from './ThemeContext';
+import { LanguageProvider } from './translate/LanguageTheme';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -11,8 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <ThemeProvider>
-            <App />
-
+            <LanguageProvider>
+                <App />
+            </LanguageProvider>
         </ThemeProvider>
     </React.StrictMode>,
 );

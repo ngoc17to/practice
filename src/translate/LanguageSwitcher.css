@@ -1,0 +1,80 @@
+.dark-mode{
+    --menu-border-color: rgb(241, 245, 249);
+    --language-underline-color: rgba(241, 245, 249, 0.3);
+    --option-hover-color: rgba(100, 116, 139, 0.3);
+    --menu-color: rgb(51, 65, 85);
+}
+.light-mode{
+    --menu-border-color: rgb(30, 41, 59);
+    --language-underline-color: rgba(30, 41, 59, 0.3);
+    --option-hover-color: rgba(100, 116, 139, 0.5);
+    --menu-color: rgb(241, 245, 249);
+}
+.set-language-container{
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    position: fixed;
+    top: 10px;
+    right: 50px;
+}
+.change-language-btn{
+    border: 0;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+}
+.language-menu{
+    border: 1px solid var(--menu-border-color);
+    width: fit-content;
+    border-radius: 5px;
+    margin-right: 8px;  
+    margin-top: -3px;  
+    position: relative;
+    z-index: 1000;
+    background-color: var(--menu-color);
+    box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.2);
+}
+.language{
+    border-bottom: 1px solid var(--language-underline-color);
+    cursor: pointer;
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+}
+.language:hover{
+    background-color: var(--option-hover-color);
+}
+.language p{
+    line-height: 50%;
+    padding: 0 10px;
+}
+
+.menu-container{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+}
+.menu-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100vw;
+    height: 100vh;
+}
+.menu-wrapper{
+    z-index: 1000;
+    width: fit-content;
+    height: fit-content;
+    animation: growth linear 0.1s;
+}
+  
+.menu{
+    height:fit-content;
+    width: 450px;
+    box-shadow: 10px 10px 30px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    color: var(--text-color);
+}
