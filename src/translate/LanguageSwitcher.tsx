@@ -6,49 +6,40 @@ import './LanguageSwitcher.css';
 
 type LanguageSwitcherProps = {
     languages: {lang: string, id: string}[]
+    languageMenu: boolean
 }
 
-const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ languages }) =>
+const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ languages, languageMenu }) =>
 {
     const { language, setLanguage } = useLanguage();
     const { theme } = useTheme();
-
-    const [languageMenu, setLanguageMenu] = useState<boolean>(false);
+    const { t } = useLanguage();
 
     const ref = useRef<any>();
 
-    useEffect(() =>
-    {
-        const checkIfClickedOutside = (e: MouseEvent) =>
-        {
-            if (languageMenu && ref.current && !ref.current.contains(e.target))
-            {
-                console.log(e.target);
-                console.log(document.getElementsByClassName('change-language-btn')[0]);
-                setLanguageMenu(false);
-            }
-        };
-        document.addEventListener('click', e => checkIfClickedOutside(e));
-        return () =>
-        {
-            document.removeEventListener('click', e=> checkIfClickedOutside(e));
-        };
-    }, [languageMenu]);
+    // useEffect(() =>
+    // {
+    //     const checkIfClickedOutside = (e: MouseEvent) =>
+    //     {
+    //         if (languageMenu && ref.current && !ref.current.contains(e.target))
+    //         {
+    //             console.log(e.target);
+    //             console.log(document.getElementsByClassName('change-language-btn')[0]);
+    //             setLanguageMenu(false);
+    //         }
+    //     };
+    //     document.addEventListener('click', e => checkIfClickedOutside(e));
+    //     return () =>
+    //     {
+    //         document.removeEventListener('click', e=> checkIfClickedOutside(e));
+    //     };
+    // }, [languageMenu]);
 
     return (
         <div
             ref={ref}
             className='set-language-container'
         >
-            <button
-                className='change-language-btn'
-                onClick={() => setLanguageMenu(!languageMenu)}
-            >
-                <BsGlobe
-                    size="100%"
-                    color={theme === 'dark' ? '#fff' : '#000'}
-                />
-            </button>
             {
                 languageMenu
                     ? (

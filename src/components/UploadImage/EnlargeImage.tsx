@@ -27,15 +27,15 @@ const EnlargeImage: React.FC<EnlargeImageProps> = ({ modalVisible, hide, imgPrev
     {
         return (
             ReactDOM.createPortal (
-                <div className="modal-container">
+                <div className="img-modal-container">
                     <div
-                        className="modal-overlay"
+                        className="img-modal-overlay"
                         onClick={hide}
                     />
                     <div className="img-modal-wrapper">
                         <img src={imgPreview} />
                         <button
-                            className="modal-button download-button"
+                            className="img-modal-button download-button"
                             onClick={downloadImage}
                         >
                             <AiOutlineCloudDownload
@@ -44,7 +44,7 @@ const EnlargeImage: React.FC<EnlargeImageProps> = ({ modalVisible, hide, imgPrev
                             />
                         </button>
                         <button
-                            className="modal-button img-close-button"
+                            className="img-modal-button img-close-button"
                             onClick={hide}
                         >
                             <AiOutlineClose

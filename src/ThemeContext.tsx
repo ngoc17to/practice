@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, PropsWithChildren } fro
 type ThemeContextReturnType = {
     theme: string
     toggleTheme: () => void
+    setTheme: (theme: string) => void
 }
 const ThemeContext = createContext<ThemeContextReturnType>({} as ThemeContextReturnType);
 
@@ -31,7 +32,7 @@ const ThemeProvider: React.FC<PropsWithChildren> = ({ children }) =>
     }, [theme]);
     
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
             {children}
         </ThemeContext.Provider>
     );

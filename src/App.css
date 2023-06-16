@@ -1,6 +1,10 @@
+@font-face {
+  font-family: 'Roboto';
+  src: local('Roboto'), url(./fonts/Roboto_Mono/RobotoMono-VariableFont_wght.ttf) format('truetype');
+}
 .light-mode {
   --text-color: #000;
-  --background-color: rgb(241, 245, 249);
+  --background-color: rgb(255, 255, 255);
   --modal-color: rgb(226, 232, 240);
   --modal-message-color:rgb(248, 250, 252);
   --submit-btn-color: rgb(100, 116, 139);
@@ -8,20 +12,23 @@
   --submit-text-color: rgb(241, 245, 249);
   --btn-color: rgb(241, 245, 249);
   --btn-border-color: rgb(100, 116, 139);
-  --btn-hover-color: rgba(100, 116, 139, 0.95);
-  --success-btn-color: rgb(241, 245, 249);
+  --btn-hover-color: rgba(100, 116, 139, 0.3);
+  --success-btn-color: rgb(255, 255, 255);
   --success-btn-hover-color: rgba(20, 180, 68, 0.95);
   --success-color: rgb(20, 180, 68);
-  --warning-btn-color: rgb(241, 245, 249);
+  --warning-btn-color: rgb(255, 255, 255);
   --warning-btn-hover-color: rgba(255, 163, 26, 0.95);
   --warning-color: rgb(255, 163, 26);
-  --error-btn-color: rgb(241, 245, 249);
+  --error-btn-color: rgb(255, 255, 255);
   --error-btn-hover-color: rgba(255, 99, 26, 0.95);
   --error-color: rgb(255, 98, 26);
+  --component-menu-hover: rgba(64, 196, 255, 0.15);
+  --border-line-color: rgba(0, 0, 0, 0.2);
+  --setting-menu-color: rgb(255, 255, 255);
 }
 .dark-mode {
   --text-color: rgb(241, 245, 249);
-  --background-color: rgb(15, 23, 42);
+  --background-color: rgb(10,25,41);
   --modal-color: rgb(30, 41, 59);
   --modal-message-color:rgb(51, 65, 85);
   --submit-btn-color: rgb(100, 116, 139);
@@ -39,14 +46,98 @@
   --error-btn-color: rgb(255, 99, 26);
   --error-btn-hover-color: rgba(255, 99, 26, 0.9);
   --error-color: rgb(255, 98, 26);
+  --component-menu-hover: rgba(64, 196, 255, 0.2);
+  --border-line-color: rgb(100, 116, 139);
+  --setting-menu-color: rgb(10,20,41);
 }
 body{
   background-color: var(--background-color);
-
 }
+
 .App {
-  padding: 5px;
   box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+}
+.component-menu{
+  background-color: var(--background-color);
+  border-right: 1px solid var(--border-line-color);
+  z-index: 1;
+}
+
+.component-list, .component-menu{
+  width: 300px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.component-list button{
+  display: flex;
+  justify-content: flex-start;
+  border: 0;
+  background-color: transparent;
+  margin: 5px;
+  margin-top: 0;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--text-color);
+}
+.component-list p{
+  font-size: 16px;
+  padding: 0px 10px;
+  font-family: "Roboto";
+  font-weight: bold;
+  color: rgb(115, 115, 115);
+  line-height: 50%;
+}
+.app-title{
+  height: 60px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: "Roboto";
+  font-weight: bold;
+}
+.app-title img{
+  width: 40px;
+  height: 40px;
+  margin: 0 10px;
+}
+.component-menu button:hover{
+  background-color: var(--component-menu-hover);
+}
+.app-content{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.navbar{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-bottom: 1px solid var(--border-line-color);
+  font-family: "Roboto";
+  font-weight: bolder;
+  background-color: var(--background-color);
+  z-index: 0;
+  color: var(--text-color);
+}
+.navbar img{
+  width: 40px;
+  height: 40px;
+  margin: 0 10px;
+}
+.component-display{
+  width: 100%;
+  height: 100%;
 }
 
 
@@ -80,4 +171,12 @@ button p{
   border: 0;
   width: 60px;
   height: 60px;
+}
+
+.component-container{
+  padding-top: 60px;
+  padding-left: 50px;
+}
+.component-container p, h1, h3{
+  color: var(--text-color);
 }

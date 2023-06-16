@@ -1,114 +1,58 @@
-import React from 'react';
-import useModal from './hooks/useModal';
-import useToast from './hooks/useToast';
-import Modal from './components/Modal/Modal';
-import Toast from './components/Toast/Toast';
-import LanguageSwitcher from './translate/LanguageSwitcher';
-import AdvanceSelect from './components/AdvanceSelect/AdvanceSelect';
-import UploadImage from './components/UploadImage/UploadImage';
+import React, { useState } from 'react';
 import './App.css';
-import { useTheme } from './ThemeContext';
 import { useLanguage } from './translate/LanguageTheme';
-import { BsFillBrightnessLowFill, BsFillMoonStarsFill } from 'react-icons/bs';
-import { AdvanceSelectOption } from './components/AdvanceSelect/type';
-
+import Setting from './components/Setting/Setting';
+import ModalComponent from './components/Modal/ModalComponent';
+import ToastComponent from './components/Toast/ToastComponent';
+import UploadImageComponent from './components/UploadImage/UploadImageComponent';
+import AdvanceSelectComponent from './components/AdvanceSelect/AdvanceSelectComponent';
+import logo from './img/logo.png';
 const App: React.FC = () =>
 {
-    const { theme, toggleTheme } = useTheme();
-    const { t } = useLanguage();
-    const { modalVisible, show } = useModal();
+    const [selectedComponent, setSelectedComponent] = useState<string>('Modal');
 
-    const { addToastHandler, deleteToastHandler, toastList } = useToast();
-
-    const text: {title: string, message: string} = {
-        title: 'Tiêu đề',
-        message: 'Tin nhắn',
-    };
-    const toastText: {message: string, type: string, id:string}[] = [
-        { message: 'Đây là toast thành công', type: 'success', id: '' },
-        { message: 'Đây là toast cảnh báo', type: 'warning', id: '' },
-        { message: 'Đây là toast lỗi', type: 'error', id: '' },
-
+    const componentList: {id: string, component: string}[] = [
+        { id: 'Modal', component: 'Modal' },
+        { id: 'Toast', component: 'Toast' },
+        { id: 'UploadImage', component: 'UploadImage' },
+        { id: 'AdvanceSelect', component: 'AdvanceSelect' },
     ];
-    const options: AdvanceSelectOption[] = [
-        { id: '1', label: 'Lựa chọn 1' },
-        { id: '2', label: 'Lựa chọn 2' },
-        { id: '3', label: 'Lựa chọn 3' },
-        { id: '4', label: 'Lựa chọn 4' },
-        { id: '5', label: 'huhuhuhuhuh' },
-        { id: '6', label: 'hihihihihihhhihi' },
-        { id: '7', label: 'hehehe' },
-    ];
-    const languages: {lang: string, id: string}[] = [
-        { lang: 'Tiếng Việt', id: 'vi' },
-        { lang: 'English', id: 'en' },
-        { lang: 'Français', id: 'fr' },
-        { lang: '日本', id: 'jp' },
-    ];
-
     return (
         <div className="App">
-            <button
-                className="button-default"
-                onClick={show}
-            >
-                <p>{t('Xác nhận')}</p>
-            </button>
-            <Modal
-                modalVisible={modalVisible}
-                hide={show}
-                text={text}
-            />
-            <button
-                className="button-default success-button"
-                onClick={() => addToastHandler(toastText[0])}
-            > <p>{t('Thành công')}</p>
-            </button>
-
-            <button
-                className="button-default warning-button"
-                onClick={() => addToastHandler(toastText[1])}
-            > <p>{t('Cảnh báo')}</p>
-            </button>
-
-            <button
-                className="button-default error-button"
-                onClick={() => addToastHandler(toastText[2])}
-            > <p>{t('Lỗi')}</p>
-            </button>
-
-            <Toast
-                toastList={toastList}
-                deleteToast={deleteToastHandler}
-            />
-            <button
-                className="mode_btn"
-                onClick={toggleTheme}
-            >
-                {
-                    theme === 'light'
-                        ? (
-                            <BsFillBrightnessLowFill
-                                size="100%"
-                                color='rgb(15, 23, 42)'
-                            />
-                        )
-                        : (
-                            <BsFillMoonStarsFill
-                                size="60%"
-                                color='rgb(241, 245, 249)'
-                            />
-                        )
-                }
-            </button>
-            <UploadImage src={''} />
-            <AdvanceSelect
-                options={options}
-                defaultValue={['1', '2']}
-                placeholder = {'Vui lòng chọn...'}
-                isMultiple
-            />
-            <LanguageSwitcher languages={languages} />
+            <div className='navbar'>
+                <img
+                    src={logo}
+                    alt='app-logo'
+                />
+            My Component
+                <Setting />
+            </div>
+            <div className='component-menu'>
+                <div className='app-title'>
+                    <img
+                        src={logo}
+                        alt='app-logo'
+                    />
+                    <h3>My Component</h3>
+                </div>
+                <div className='component-list'>
+                    <p>COMPONENTS</p>
+                    {componentList.map(({ id, component }) => (
+                        <button
+                            key={id}
+                            style={selectedComponent === component ? { color: 'rgb(241, 245, 249)', backgroundColor: 'rgb(0, 145, 234)', fontWeight: 'bolder' } : {}}
+                            onClick={() => setSelectedComponent(component)}
+                        >{component}
+                        </button>
+                    ))}
+                </div>
+            </div>
+            <div className='component-display'>
+                {selectedComponent === 'Modal' && <ModalComponent />}
+                {selectedComponent === 'Toast' && <ToastComponent />}
+                {selectedComponent === 'UploadImage' && <UploadImageComponent />}
+                {selectedComponent === 'AdvanceSelect' && <AdvanceSelectComponent />}
+            </div>
         </div>
     );
 };

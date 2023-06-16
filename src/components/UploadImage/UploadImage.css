@@ -84,16 +84,6 @@
 }
 
 
-.modal-container{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 @keyframes growth {
     from {
       transform: scale(0.5);
@@ -102,20 +92,24 @@
       transform: scale(1);
     }
 }
-.modal-container{
+.img-modal-container{
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-}
-.modal-overlay{
-    position: absolute;
-    top: 0;
-    left: 0;
+    left: 300px;
+    top: 60px;
     z-index: 999;
-    width: 100vw;
-    height: 100vh;
+    width: calc(100% - 300px);
+    height: calc(100% - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.img-modal-overlay{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0,0,0,0.3);
 }
 .img-modal-wrapper{
@@ -134,10 +128,10 @@
     padding: 15px;
     size: 50%;
 }
-.modal-button:hover{
+.img-modal-button:hover{
     background-color: var(--close-btn-hover);
 }
-.modal-button{
+.img-modal-button{
     border-radius: 50%;
     cursor: pointer;
     width: 30px;

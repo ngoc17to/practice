@@ -21,14 +21,23 @@ const LanguageProvider: React.FC<PropsWithChildren> = ({ children }) =>
     const t = (text: string) =>
     {
         if (language === 'vi') {return text;}
-
-        const loadedLanguage: Record<string, string> = require(`./languages/${language}.json`);
+        let loadedLanguage: Record<string, string> = {};
+        try
+        {
+            loadedLanguage = require(`./languages/${language}.json`);
+        }
+        catch (e)
+        {
+            console.log('Error:', e);
+        }
+                            
         if (text in loadedLanguage)
         {
             return loadedLanguage[text];
         }
-        
+    
         return text;
+
     };
 
     return (

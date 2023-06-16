@@ -98,7 +98,7 @@
 input{
   border: 0;
   height: 40px;
-  width: max-content;
+  width: fit-content;
   background-color: transparent;
   outline: none;
   cursor: pointer;

@@ -40,6 +40,8 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
             {
                 setDropdownMenuVisible(false);
             }
+            // const ele = document.getElementsByClassName('input-select')[0] as HTMLElement;
+            // ele.click();
         };
         document.addEventListener('click', e => checkIfClickedOutside(e));
         return () =>
@@ -185,6 +187,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
                                     </div>
                                 ))}
                                 <input
+                                    className='input-select'
                                     type='text'
                                     placeholder={valueList.length === 0 ? (placeholder ? t(placeholder) : '') : ''}
                                     tabIndex={0}
@@ -194,7 +197,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
                             </div>
                         )
                         : (
-                            <div>{showOptions[parseInt(valueList[0]) - 1].label}
+                            <div>{valueList.length > 0 ? showOptions[parseInt(valueList[0]) - 1].label : <></>}
                                 <input
                                     type='text'
                                     placeholder={valueList.length === 0 ? (placeholder ? t(placeholder) : '') : ''}
