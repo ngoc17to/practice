@@ -1,8 +1,8 @@
 import React from 'react';
-import useToast from '../../hooks/useToast';
-import Toast from './Toast';
-import '../../App.css';
-import { useLanguage } from '../../translate/LanguageTheme';
+import useToast from '../hooks/useToast';
+import Toast from '../components/Toast/Toast';
+import '.././App.css';
+import { useLanguage } from '../translate/LanguageTheme';
 const ToastComponent: React.FC = () =>
 {
     const { t } = useLanguage();

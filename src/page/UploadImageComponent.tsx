@@ -1,7 +1,7 @@
 import React from 'react';
-import UploadImage from './UploadImage';
-import '../../App.css';
-import { useLanguage } from '../../translate/LanguageTheme';
+import UploadImage from '../components/UploadImage/UploadImage';
+import '.././App.css';
+import { useLanguage } from '../translate/LanguageTheme';
 const UploadImageComponent: React.FC = () =>
 {
     const { t } = useLanguage();

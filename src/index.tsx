@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from './ThemeContext';
 import { LanguageProvider } from './translate/LanguageTheme';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -13,7 +14,9 @@ root.render(
     <React.StrictMode>
         <ThemeProvider>
             <LanguageProvider>
-                <App />
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
             </LanguageProvider>
         </ThemeProvider>
     </React.StrictMode>,

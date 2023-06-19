@@ -5,7 +5,7 @@ import './Setting.css';
 import { useTheme } from '../../ThemeContext';
 import { useLanguage } from '../../translate/LanguageTheme';
 import { AiOutlineClose } from 'react-icons/ai';
-import { BsFillBrightnessLowFill, BsFillMoonStarsFill, BsGlobe } from 'react-icons/bs';
+import { BsFillBrightnessLowFill, BsFillMoonStarsFill } from 'react-icons/bs';
 import LanguageSwitcher from '../../translate/LanguageSwitcher';
 type SettingMenuProps = {
     settingVisible: boolean
@@ -52,8 +52,8 @@ const SettingMenu: React.FC<SettingMenuProps> = ({ settingVisible, hide }) =>
                                     <p>{t('Chế độ')}</p>
                                     <div className='mode'>
                                         <button
-                                            className="setting-btn light-mode-btn"
-                                            style={theme === 'light' ? { border: '1px solid rgb(0,127,255)', backgroundColor: 'rgb(240,247,255' } : {}}
+                                            className={`setting-btn ${ theme === 'light' && 'light-mode-btn'}`}
+                                            style={{ borderRadius: '10px 0 0 10px' }}
                                             onClick={() => setTheme('light')}
                                         >
                                             <BsFillBrightnessLowFill
@@ -63,8 +63,8 @@ const SettingMenu: React.FC<SettingMenuProps> = ({ settingVisible, hide }) =>
                                             <p style={{ width: '100%', fontSize: '16px' }}>{t('Chế độ sáng')}</p>
                                         </button>
                                         <button
-                                            className="setting-btn dark-mode-btn"
-                                            style={theme === 'dark' ? { border: '1px solid rgb(37,111,185)', backgroundColor: 'rgba(37,111,185,0.3)' } : {}}
+                                            className={`setting-btn ${ theme === 'dark' && 'dark-mode-btn'}`}
+                                            style={{ borderRadius: '0 10px 10px 0', borderLeft: '0' }}
                                             onClick={() => setTheme('dark')}
                                         >
                                             <BsFillMoonStarsFill

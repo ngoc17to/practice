@@ -52,6 +52,9 @@
 }
 body{
   background-color: var(--background-color);
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .App {
@@ -59,38 +62,15 @@ body{
   height: 100vh;
   width: 100vw;
   display: flex;
+  flex-direction: row;
 }
-.component-menu{
+.app-right{
+  width: 100%;
+  display: flex;
+  flex-direction: column;    
+  padding-left: 350px;
+  padding-top: 60px;
   background-color: var(--background-color);
-  border-right: 1px solid var(--border-line-color);
-  z-index: 1;
-}
-
-.component-list, .component-menu{
-  width: 300px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-.component-list button{
-  display: flex;
-  justify-content: flex-start;
-  border: 0;
-  background-color: transparent;
-  margin: 5px;
-  margin-top: 0;
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--text-color);
-}
-.component-list p{
-  font-size: 16px;
-  padding: 0px 10px;
-  font-family: "Roboto";
-  font-weight: bold;
-  color: rgb(115, 115, 115);
-  line-height: 50%;
 }
 .app-title{
   height: 60px;
@@ -105,45 +85,17 @@ body{
   height: 40px;
   margin: 0 10px;
 }
-.component-menu button:hover{
-  background-color: var(--component-menu-hover);
-}
+
 .app-content{
   height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.navbar{
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 60px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  border-bottom: 1px solid var(--border-line-color);
-  font-family: "Roboto";
-  font-weight: bolder;
-  background-color: var(--background-color);
-  z-index: 0;
-  color: var(--text-color);
-}
-.navbar img{
-  width: 40px;
-  height: 40px;
-  margin: 0 10px;
-}
-.component-display{
-  width: 100%;
-  height: 100%;
-}
-
-
 button{
   cursor: pointer;
 }
+  
 
 .button-default{
   background-color: var(--btn-color);
@@ -151,6 +103,7 @@ button{
   border-radius: 4px;
   margin: 5px;
   height: 35px;
+  z-index: 0;
 }
 
 .button-default:hover{
@@ -174,9 +127,13 @@ button p{
 }
 
 .component-container{
-  padding-top: 60px;
-  padding-left: 50px;
+  width: 100%;
+  height: 100%;
 }
 .component-container p, h1, h3{
   color: var(--text-color);
+}
+.menu-responsive{
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 0;
 }

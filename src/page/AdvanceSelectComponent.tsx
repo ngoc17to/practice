@@ -1,8 +1,8 @@
 import React from 'react';
-import AdvanceSelect from './AdvanceSelect';
-import '../../App.css';
-import { useLanguage } from '../../translate/LanguageTheme';
-import { AdvanceSelectOption } from './type';
+import AdvanceSelect from '../components/AdvanceSelect/AdvanceSelect';
+import '.././App.css';
+import { useLanguage } from '../translate/LanguageTheme';
+import { AdvanceSelectOption } from '../components/AdvanceSelect/type';
 
 const AdvanceSelectComponent: React.FC = () =>
 {
@@ -43,7 +43,48 @@ const AdvanceSelectComponent: React.FC = () =>
                 isMultiple
             />
             <h3>{t('Select không thể sửa đổi')}</h3>
-            
+            <AdvanceSelect
+                options={options}
+                defaultValue={['1', '2']}
+                placeholder = {'Vui lòng chọn...'}
+                isMultiple
+            />
+            <h3>{t('Select không thể sửa đổi')}</h3>
+            <AdvanceSelect
+                options={options}
+                defaultValue={['1', '2']}
+                placeholder = {'Vui lòng chọn...'}
+                isMultiple
+            />
+            <h3>{t('Select không thể sửa đổi')}</h3>
+            <AdvanceSelect
+                options={options}
+                defaultValue={['1', '2']}
+                placeholder = {'Vui lòng chọn...'}
+                isMultiple
+            />
+            <h3>{t('Select không thể sửa đổi')}</h3>
+            <AdvanceSelect
+                options={options}
+                defaultValue={['1', '2']}
+                placeholder = {'Vui lòng chọn...'}
+                isMultiple
+            />
+            <h3>{t('Select không thể sửa đổi')}</h3>
+            <AdvanceSelect
+                options={options}
+                defaultValue={['1', '2']}
+                placeholder = {'Vui lòng chọn...'}
+                isMultiple
+            />
+            <h3>{t('Select không thể sửa đổi')}</h3>
+            <AdvanceSelect
+                options={options}
+                defaultValue={['1', '2']}
+                placeholder = {'Vui lòng chọn...'}
+                isMultiple
+            />
+            <h3>{t('Select không thể sửa đổi')}</h3>
             <AdvanceSelect
                 options={options}
                 defaultValue={['1', '2']}

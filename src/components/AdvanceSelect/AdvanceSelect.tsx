@@ -199,6 +199,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
                         : (
                             <div>{valueList.length > 0 ? showOptions[parseInt(valueList[0]) - 1].label : <></>}
                                 <input
+                                    className='input-select'
                                     type='text'
                                     placeholder={valueList.length === 0 ? (placeholder ? t(placeholder) : '') : ''}
                                     tabIndex={0}

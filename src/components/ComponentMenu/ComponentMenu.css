@@ -1,0 +1,138 @@
+
+.component-menu{
+    position: fixed;
+    background-color: var(--background-color);
+    border-right: 1px solid var(--border-line-color);
+    z-index: 999;
+  }
+.component-menu li:hover{
+    background-color: var(--component-menu-hover);
+  }
+  
+.component-list, .component-menu{
+    width: 100%;
+    max-width: 300px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+.component-list ul{
+    padding-left: 0;
+}
+.component-list li{
+    display: flex;
+    justify-content: flex-start;
+    margin: 5px;
+    margin-top: 0;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--text-color);
+    
+  }
+.component-list li a:visited{
+    color: var(--text-color);
+    text-decoration: none;
+}
+.component-list li a{
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.component-list p{
+    font-size: 16px;
+    padding: 0px 10px;
+    font-family: "Roboto";
+    font-weight: bold;
+    color: rgb(115, 115, 115);
+    line-height: 50%;
+}
+
+.navbar{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-line-color);
+    font-family: "Roboto";
+    font-weight: bolder;
+    background-color: var(--background-color);
+    z-index: 0;
+    color: var(--text-color);
+  }
+  .navbar-right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .navbar img{
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
+  }
+  
+  .menu-button{
+    width: 40px;
+    height: 40px;
+    visibility: hidden;
+    margin-left: 10px;
+    background-color: transparent;
+    border: 0;
+  
+}
+  
+@media screen and (min-width: 1200px) {
+    .app-right{background-color: var(--background-color);}
+}
+@media screen and (max-width: 1200px) {
+    .component-menu {visibility: hidden;}
+    .app-right{
+        padding-left: 50px;
+    }
+    .menu-button {
+        visibility: visible;
+    }
+}
+@keyframes slidemenu {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}
+
+.show-menu{
+    visibility: visible;
+    animation: slidemenu linear 0.15s;
+}
+
+.res-menu-container{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items:flex-start;
+    justify-content: flex-start;
+}
+.res-menu-overlay{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);;
+}
+.res-menu-wrapper{
+    z-index: 1000;
+    width: fit-content;
+    height: fit-content;
+    animation: slidemenu linear 0.1s;
+}

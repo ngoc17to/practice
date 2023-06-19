@@ -1,8 +1,8 @@
 import React from 'react';
-import useModal from '../../hooks/useModal';
-import Modal from './Modal';
-import '../../App.css';
-import { useLanguage } from '../../translate/LanguageTheme';
+import useModal from '../hooks/useModal';
+import Modal from '../components/Modal/Modal';
+import '.././App.css';
+import { useLanguage } from '../translate/LanguageTheme';
 const ModalComponent: React.FC = () =>
 {
     const { t } = useLanguage();

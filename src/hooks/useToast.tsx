@@ -33,10 +33,10 @@ const useToast: ToastHookReturnType = () =>
                 },
             ];
 
-            setTimeout(() =>
-            {
-                deleteToastHandler(newToastId);
-            }, 3000);
+            // setTimeout(() =>
+            // {
+            //     deleteToastHandler(newToastId);
+            // }, 3000);
 
             return newToastList;
         });

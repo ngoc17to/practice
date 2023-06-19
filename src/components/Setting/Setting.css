@@ -28,6 +28,7 @@
     height: 100vh;
     display: flex;
     justify-content: flex-end;
+    overflow: hidden;
 }
 .setting-overlay{
     position: absolute;
@@ -96,11 +97,12 @@
     justify-content: center;
 }
 .light-mode-btn{
-    border-radius: 10px 0 0 10px;
+    border: 1px solid rgb(0,127,255);
+    background-color: rgb(240,247,255);
 }
 .dark-mode-btn{
-    border-radius: 0 10px 10px 0;
-    border-left: 0;
+    border: 1px solid rgb(37,111,185);
+    background-color: rgba(37,111,185,0.3);
 }
 .lang-btn{
     border-radius: 10px;

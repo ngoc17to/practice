@@ -41,6 +41,7 @@
     justify-content: flex-end;
     width: fit-content;
     color: var(--text-color);
+    overflow: hidden;
 }
   
 @keyframes slide {
@@ -61,7 +62,6 @@
     border-radius: 5px;
     padding-left: 10px;
     animation: slide linear 0.2s;
-    box-shadow: 10px 10px 30px 5px rgba(0, 0, 0, 0.3);
 }
   
 .warning{
@@ -73,7 +73,6 @@
     border-radius: 5px;
     padding-left: 10px;
     animation: slide linear 0.2s;
-    box-shadow: 10px 10px 30px 5px rgba(0, 0, 0, 0.3);
 }
   
 .error{
@@ -85,7 +84,6 @@
     border-radius: 5px;
     padding-left: 10px;
     animation: slide linear 0.2s;
-    box-shadow: 10px 10px 30px 5px rgba(0, 0, 0, 0.3);
 }
 
 .toast-close-button{
