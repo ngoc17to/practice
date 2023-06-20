@@ -15,6 +15,22 @@ const Toast: React.FC<ToastProps> = ({ toastList, deleteToast }) =>
     const { theme } = useTheme();
     const { t } = useLanguage();
 
+    const renderIcon = (type: string) =>
+    {
+        switch (type)
+        {
+            case 'success': {
+                return <AiFillCheckCircle size="100%" />;
+            }
+            case 'warning': {
+                return <AiFillWarning size="100%" />;
+            }
+            default: {
+                return <AiFillCloseCircle size="100%" />;
+            }
+        }
+    };
+
     if (toastList !== null)
     {
         return (
@@ -27,24 +43,18 @@ const Toast: React.FC<ToastProps> = ({ toastList, deleteToast }) =>
                                 className={type}
                             >
                                 <div className='toast-icon'>
-                                    {
-                                        type === 'success'
-                                            ? <AiFillCheckCircle size="100%" />
-                                            : (
-                                                type === 'warning'
-                                                    ? <AiFillWarning size="100%" />
-                                                    : <AiFillCloseCircle size="100%" />
-                                            )
-                                    }
+                                    {renderIcon(type)}
                                 </div>
+
                                 <p>{t(message)}</p>
+
                                 <button
                                     className="toast-close-button"
                                     onClick={() => deleteToast(id)}
                                 >
                                     <AiOutlineClose
                                         size="100%"
-                                        color={theme === 'dark' ? '#fff' : '#000'}
+                                        className='app-icon'
                                     />
                                 </button>
                             </div>

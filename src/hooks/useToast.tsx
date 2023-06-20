@@ -1,23 +1,16 @@
 import { useState } from 'react';
+
 type ToastType = {message: string, type: string, id:string}
 type ToastHookReturnType = () => {
     toastList: ToastType[]
     addToastHandler: (clickedToastButton: ToastType) => void
     deleteToastHandler: (id: string) => void
 }
+
 const useToast: ToastHookReturnType = () =>
 {
     const [toastList, setToastList] = useState<ToastType[]>([]);
-    // useEffect(() => {
-    //     const timer = setTimeout(() => {
-    //         if (toastList.length) {
-    //             deleteToastHandler(toastList[0].id);
-    //         }
-    //     }, 2000);
-    //     return () => {
-    //         clearTimeout(timer);
-    //     }
-    // });
+
     function addToastHandler(clickedToastButton: ToastType)
     {
         setToastList(currentToastList =>
@@ -33,15 +26,16 @@ const useToast: ToastHookReturnType = () =>
                 },
             ];
 
-            // setTimeout(() =>
-            // {
-            //     deleteToastHandler(newToastId);
-            // }, 3000);
+            setTimeout(() =>
+            {
+                deleteToastHandler(newToastId);
+            }, 3000);
 
             return newToastList;
         });
         
     }
+    
     function deleteToastHandler(id: string)
     {
         setToastList(currentToastList =>
@@ -49,6 +43,7 @@ const useToast: ToastHookReturnType = () =>
             return currentToastList.filter((toast) => toast.id !== id);
         });
     }
+
     return {
         toastList,
         addToastHandler,

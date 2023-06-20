@@ -9,8 +9,9 @@ const ThemeContext = createContext<ThemeContextReturnType>({} as ThemeContextRet
 const ThemeProvider: React.FC<PropsWithChildren> = ({ children }) =>
 {
     const intialTheme = localStorage.getItem('MYAPP_THEME');
-    console.log(intialTheme);
+
     const [theme, setTheme] = useState<string>((intialTheme === null) ? 'light' : intialTheme);
+
     const toggleTheme = () =>
     {
         setTheme(theme === 'light' ? 'dark' : 'light');
@@ -18,17 +19,12 @@ const ThemeProvider: React.FC<PropsWithChildren> = ({ children }) =>
     
     useEffect(() =>
     {
+        const currentTheme = localStorage.getItem('MYAPP_THEME');
+
+        document.body.classList.remove(`${currentTheme}-mode`);
+        document.body.classList.add(`${theme}-mode`);
+
         localStorage.setItem('MYAPP_THEME', theme);
-        if (theme === 'light')
-        {
-            document.body.classList.remove('dark-mode');
-            document.body.classList.add('light-mode');
-        }
-        else
-        {
-            document.body.classList.remove('light-mode');
-            document.body.classList.add('dark-mode');
-        }
     }, [theme]);
     
     return (
@@ -38,6 +34,7 @@ const ThemeProvider: React.FC<PropsWithChildren> = ({ children }) =>
     );
 };
 type useThemeType = () => ThemeContextReturnType
+
 const useTheme: useThemeType = () =>
 {
     const context = useContext(ThemeContext);

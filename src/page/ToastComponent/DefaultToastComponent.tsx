@@ -1,9 +1,9 @@
 import React from 'react';
-import useToast from '../hooks/useToast';
-import Toast from '../components/Toast/Toast';
-import '.././App.css';
-import { useLanguage } from '../translate/LanguageTheme';
-const ToastComponent: React.FC = () =>
+import useToast from '../../hooks/useToast';
+import Toast from '../../components/Toast/Toast';
+import '../../App.css';
+import { useLanguage } from '../../translate/LanguageTheme';
+const DefaultToastComponent: React.FC = () =>
 {
     const { t } = useLanguage();
 
@@ -46,4 +46,4 @@ const ToastComponent: React.FC = () =>
     );
 };
 
-export default ToastComponent;
+export default DefaultToastComponent;

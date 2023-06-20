@@ -3,21 +3,21 @@
     position: fixed;
     background-color: var(--background-color);
     border-right: 1px solid var(--border-line-color);
-    z-index: 999;
+    z-index: 1000;
   }
-.component-menu li:hover{
+.component-list li:hover{
     background-color: var(--component-menu-hover);
+    cursor: pointer;
   }
-  
 .component-list, .component-menu{
-    width: 100%;
-    max-width: 300px;
+    width: 300px;
     height: 100vh;
     display: flex;
     flex-direction: column;
   }
 .component-list ul{
     padding-left: 0;
+    margin: 0;
 }
 .component-list li{
     display: flex;
@@ -30,13 +30,15 @@
     color: var(--text-color);
     
   }
-.component-list li a:visited{
+.component-list a:visited{
     color: var(--text-color);
     text-decoration: none;
 }
-.component-list li a{
+.component-list a{
     color: var(--text-color);
     text-decoration: none;
+    width: 100%;
+    font-weight:500;
 }
 
 .component-list p{
@@ -61,7 +63,7 @@
     font-family: "Roboto";
     font-weight: bolder;
     background-color: var(--background-color);
-    z-index: 0;
+    z-index: 10;
     color: var(--text-color);
   }
   .navbar-right{
@@ -86,12 +88,14 @@
 }
   
 @media screen and (min-width: 1200px) {
-    .app-right{background-color: var(--background-color);}
+    .res-menu-container{
+        visibility: hidden;
+    }
 }
 @media screen and (max-width: 1200px) {
     .component-menu {visibility: hidden;}
     .app-right{
-        padding-left: 50px;
+        padding-left: 20px;        
     }
     .menu-button {
         visibility: visible;
@@ -112,6 +116,7 @@
 }
 
 .res-menu-container{
+    z-index: 1000;
     position: absolute;
     left: 0;
     top: 0;
@@ -119,20 +124,23 @@
     height: 100%;
     display: flex;
     align-items:flex-start;
-    justify-content: flex-start;
+    justify-content: flex-start;  
+    position: fixed;
 }
 .res-menu-overlay{
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 999;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.3);;
+    background-color: rgba(0,0,0,0.3);  
+    position: fixed;
 }
 .res-menu-wrapper{
-    z-index: 1000;
     width: fit-content;
     height: fit-content;
-    animation: slidemenu linear 0.1s;
+    animation: slidemenu linear 0.1s;    
+    position: fixed;
+    background-color: var(--background-color);
+    border-right: 1px solid var(--border-line-color);
 }

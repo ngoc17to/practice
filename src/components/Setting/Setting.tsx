@@ -10,6 +10,7 @@ const Setting: React.FC = () =>
 {
     const { theme } = useTheme();
     const { modalVisible, show } = useModal();
+    
     return (
         <div>
             <button

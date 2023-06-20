@@ -16,6 +16,7 @@ type EnlargeImageProps = {
 const EnlargeImage: React.FC<EnlargeImageProps> = ({ modalVisible, hide, imgPreview }) =>
 {
     const { theme } = useTheme();
+
     const downloadImage = () =>
     {
         if (imgPreview)
@@ -23,6 +24,7 @@ const EnlargeImage: React.FC<EnlargeImageProps> = ({ modalVisible, hide, imgPrev
             saveAs(imgPreview, 'image.jpg');
         }
     };
+
     if (modalVisible)
     {
         return (
@@ -39,8 +41,8 @@ const EnlargeImage: React.FC<EnlargeImageProps> = ({ modalVisible, hide, imgPrev
                             onClick={downloadImage}
                         >
                             <AiOutlineCloudDownload
+                                className='app-icon'
                                 size="100%"
-                                color={theme === 'dark' ? '#fff' : '#000'}
                             />
                         </button>
                         <button
@@ -48,8 +50,8 @@ const EnlargeImage: React.FC<EnlargeImageProps> = ({ modalVisible, hide, imgPrev
                             onClick={hide}
                         >
                             <AiOutlineClose
+                                className='app-icon'
                                 size="100%"
-                                color={theme === 'dark' ? '#fff' : '#000'}
                             />
                         </button>
                     </div>

@@ -6,6 +6,7 @@ type ModalHookReturnType = () => {
 const useModal: ModalHookReturnType = () =>
 {
     const [modalVisible, setmodalVisible] = useState<boolean>(false);
+    
     function show()
     {
         setmodalVisible(!modalVisible);

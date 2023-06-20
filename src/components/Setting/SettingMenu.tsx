@@ -7,23 +7,38 @@ import { useLanguage } from '../../translate/LanguageTheme';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BsFillBrightnessLowFill, BsFillMoonStarsFill } from 'react-icons/bs';
 import LanguageSwitcher from '../../translate/LanguageSwitcher';
+
 type SettingMenuProps = {
     settingVisible: boolean
     hide: () => void
 }
+
+const modes = [
+    {
+        id: 'light',
+        icon: BsFillBrightnessLowFill,
+        label: 'Chế độ sáng',
+    },
+    {
+        id: 'dark',
+        icon: BsFillMoonStarsFill,
+        label: 'Chế độ tối',
+    },
+];
+
+const languages = [
+    { lang: 'Tiếng Việt', id: 'vi' },
+    { lang: 'English', id: 'en' },
+    { lang: 'Français', id: 'fr' },
+    { lang: '日本', id: 'jp' },
+];
+
 const SettingMenu: React.FC<SettingMenuProps> = ({ settingVisible, hide }) =>
 {
     const { theme, setTheme } = useTheme();
     const { t } = useLanguage();
 
-    const [languageMenu, setLanguageMenu] = useState<boolean>(false);
-
-    const languages: {lang: string, id: string}[] = [
-        { lang: 'Tiếng Việt', id: 'vi' },
-        { lang: 'English', id: 'en' },
-        { lang: 'Français', id: 'fr' },
-        { lang: '日本', id: 'jp' },
-    ];
+    const [languageMenu, setLanguageMenu] = useState(false);
 
     if (settingVisible)
     {
@@ -34,6 +49,7 @@ const SettingMenu: React.FC<SettingMenuProps> = ({ settingVisible, hide }) =>
                         className="setting-overlay"
                         onClick={hide}
                     />
+
                     <div className="setting-wrapper">
                         <div className="setting">
                             <div className="setting-header">{t('Cài đặt')}
@@ -47,32 +63,33 @@ const SettingMenu: React.FC<SettingMenuProps> = ({ settingVisible, hide }) =>
                                     />
                                 </button>
                             </div>
+
                             <div className='setting-content'>
                                 <div className='setting-mode'>
                                     <p>{t('Chế độ')}</p>
+
                                     <div className='mode'>
-                                        <button
-                                            className={`setting-btn ${ theme === 'light' && 'light-mode-btn'}`}
-                                            style={{ borderRadius: '10px 0 0 10px' }}
-                                            onClick={() => setTheme('light')}
-                                        >
-                                            <BsFillBrightnessLowFill
-                                                size="80%"
-                                                color={theme === 'dark' ? '#fff' : '#000'}
-                                            />
-                                            <p style={{ width: '100%', fontSize: '16px' }}>{t('Chế độ sáng')}</p>
-                                        </button>
-                                        <button
-                                            className={`setting-btn ${ theme === 'dark' && 'dark-mode-btn'}`}
-                                            style={{ borderRadius: '0 10px 10px 0', borderLeft: '0' }}
-                                            onClick={() => setTheme('dark')}
-                                        >
-                                            <BsFillMoonStarsFill
-                                                size="50%"
-                                                color={theme === 'dark' ? '#fff' : '#000'}
-                                            />
-                                            <p style={{ width: '100%', fontSize: '16px' }}>{t('Chế độ tối')}</p>
-                                        </button>
+                                        {
+                                            modes.map(mode =>
+                                            {
+                                                const Icon = mode.icon;
+
+                                                return (
+                                                    <button
+                                                        key={mode.id}
+                                                        className={`setting-btn ${mode.id}-mode-btn`}
+                                                        onClick={() => setTheme(mode.id)}
+                                                    >
+                                                        <Icon
+                                                            size="80%"
+                                                            color={theme === 'dark' ? '#fff' : '#000'}
+                                                        />
+
+                                                        <p style={{ width: '100%', fontSize: '16px' }}>{t(mode.label)}</p>
+                                                    </button>
+                                                );
+                                            })
+                                        }
                                     </div>
                                 </div>
                                 <div className='setting-language'>

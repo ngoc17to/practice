@@ -11,10 +11,12 @@ type ModalProps = {
     hide: () => void
     text: {title: string, message: string}
 }
+
 const Modal: React.FC<ModalProps> = ({ modalVisible, hide, text }) =>
 {
     const { theme } = useTheme();
     const { t } = useLanguage();
+    
     if (modalVisible)
     {
         return (

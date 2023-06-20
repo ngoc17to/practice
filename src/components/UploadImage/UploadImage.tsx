@@ -20,8 +20,10 @@ const UploadImage: React.FC<UploadImageProps> = ({ src }) =>
     const hiddenFileInput = useRef<HTMLInputElement>(null);
     const uploadBtnRef = useRef<HTMLButtonElement>(null);
     const enlargeBtnRef = useRef<HTMLButtonElement>(null);
+
     const [selectedImage, setSelectedImage] = useState<any>();
     const [imgPreview, setImgPreview] = useState<string | undefined>(src ? src : undefined);
+
     useEffect(() =>
     {
         if (!selectedImage)
@@ -29,8 +31,11 @@ const UploadImage: React.FC<UploadImageProps> = ({ src }) =>
             setImgPreview(undefined);
             return;
         }
+
         const imgURL = URL.createObjectURL(selectedImage);
+
         setImgPreview(imgURL);
+
         return () => URL.revokeObjectURL(imgURL);
     }, [selectedImage]);
 
@@ -43,14 +48,9 @@ const UploadImage: React.FC<UploadImageProps> = ({ src }) =>
         else {console.log('do not exist defaultImg');}
     }, [src]);
 
-    const changeHandler = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) =>
+    const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
     {
-        if (!event.target.files || event.target.files.length === 0)
-        {
-            return;
-        }
+        if (!event.target.files || event.target.files.length === 0) {return;}
         setSelectedImage(event.target.files[0]);
     };
 
@@ -62,6 +62,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ src }) =>
             hiddenFileInput.current.click();
         }
     }
+
     function imgEnterHandler()
     {
         uploadBtnRef.current?.classList.add('upload-btn-show');
@@ -69,6 +70,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ src }) =>
         enlargeBtnRef.current?.classList.add('enlarge-btn-show');
         enlargeBtnRef.current?.classList.remove('enlarge-btn-hide');
     }
+
     function imgLeaveHandler()
     {
         uploadBtnRef.current?.classList.remove('upload-btn-show');
@@ -76,16 +78,19 @@ const UploadImage: React.FC<UploadImageProps> = ({ src }) =>
         enlargeBtnRef.current?.classList.add('enlarge-btn-hide');
         enlargeBtnRef.current?.classList.remove('enlarge-btn-show');
     }
+
     function uploadBtnEnterHandler()
     {
         uploadBtnRef.current?.classList.add('upload-btn-show');
         uploadBtnRef.current?.classList.remove('upload-btn-hide');
     }
+    
     function uploadBtnLeaveHandler()
     {
         uploadBtnRef.current?.classList.remove('upload-btn-show');
         uploadBtnRef.current?.classList.add('upload-btn-hide');
     }
+
     return (
         <div>
             <div className='upload-container'>
@@ -128,7 +133,6 @@ const UploadImage: React.FC<UploadImageProps> = ({ src }) =>
                             size="100%"
                             color={theme === 'dark' ? '#fff' : '#000'}
                         />
-
                     </button>
                 </div>
                 <button
@@ -145,8 +149,6 @@ const UploadImage: React.FC<UploadImageProps> = ({ src }) =>
                     />
                     <p style={{ marginLeft: '5px' }}>{t('Tải ảnh lên')}</p>
                 </button>
-
-
             </div>
             
             <input

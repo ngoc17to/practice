@@ -1,12 +1,14 @@
 import React from 'react';
-import '../../App.css';
-import './AdvanceSelect.css';
 import { useState, useRef, useEffect } from 'react';
 import { BsCaretDown, BsCaretUp, BsCheck } from 'react-icons/bs';
 import { AiOutlineClose } from 'react-icons/ai';
+
 import { useTheme } from '../../ThemeContext';
 import { AdvanceSelectOption } from './type';
 import { useLanguage } from '../../translate/LanguageTheme';
+
+import '../../App.css';
+import './AdvanceSelect.css';
 
 type AdvanceSelectProps = {
     options: AdvanceSelectOption[]
@@ -18,7 +20,7 @@ type AdvanceSelectProps = {
 
 const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
 {
-    const { options, defaultValue = [], isMultiple, placeholder, disable } = props;
+    const { options, defaultValue = [], isMultiple, placeholder = 'Vui lòng chọn...', disable } = props;
 
     const { theme } = useTheme();
     const { t } = useLanguage();
@@ -36,6 +38,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
         const checkIfClickedOutside = (e: MouseEvent) =>
         {
             const a = e.target;
+
             if (dropdownMenuVisible && selectRef.current && !selectRef.current.contains(a))
             {
                 setDropdownMenuVisible(false);
@@ -43,44 +46,41 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
             // const ele = document.getElementsByClassName('input-select')[0] as HTMLElement;
             // ele.click();
         };
-        document.addEventListener('click', e => checkIfClickedOutside(e));
+
+        document.addEventListener('mousedown', e => checkIfClickedOutside(e));
+
         return () =>
         {
-            document.removeEventListener('click', e=> checkIfClickedOutside(e));
+            document.removeEventListener('mousedown', e=> checkIfClickedOutside(e));
         };
     }, [dropdownMenuVisible]);
 
     const itemClickHandler = (id: string) =>
     {
-        if (isMultiple)
-        {
-            if (valueList)
-            {
-                if (valueList.some(element => element === id))
-                {
-                    
-                    let currentValueList: string[] = valueList;
-                    currentValueList = currentValueList.filter((currentValueList) => currentValueList !== id);
-                    setValueList(currentValueList);
+        setDropdownMenuVisible(false);
 
-                }
-                else
-                {
-                    const currentValueList: string[] = valueList;
-                    currentValueList.push(id);
-                    setValueList(currentValueList);
-                }
-            }
-            else
-            {
-                setValueList([id]);
-            }
+        if (!isMultiple || !valueList)
+        {
+            setValueList([id]);
+            return;
+        }
+
+        if (valueList.some(element => element === id))
+        {
+                    
+            let currentValueList: string[] = valueList;
+            currentValueList = currentValueList.filter((currentValueList) => currentValueList !== id);
+            setValueList(currentValueList);
+
         }
         else
         {
-            setValueList([id]);
+            const currentValueList: string[] = valueList;
+            currentValueList.push(id);
+            setValueList(currentValueList);
         }
-        setDropdownMenuVisible(false);
+
+        
     };
 
     const clearItemHandler = (event: React.MouseEvent<HTMLElement>) =>
@@ -96,19 +96,17 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
         {
             event.stopPropagation();
         }
+
         const { target } = event;
         const filterOption = options.filter((options) => options.label.toLocaleLowerCase().includes(target.value.toLowerCase()));
+
         setShowOptions(filterOption);
         setMessage(event.target.value);
     };
 
-    
     const deselectItemHandler = (id: string) =>
     {
-        setValueList(currentValueList =>
-        {
-            return currentValueList.filter((currentValueList) => currentValueList !== id);
-        });
+        setValueList(currentValueList => currentValueList.filter((currentValueList) => currentValueList !== id));
     };
 
     const handleKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (e) =>
@@ -141,6 +139,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
             }
             setFocusIndex(focusedIndex);
         }
+
         if (key === 'Backspace')
         {
             if (valueList.length > 0 && message.length === 0)
@@ -149,8 +148,43 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
             }
             setFocusIndex(focusedIndex);
         }
+
         setDropdownMenuVisible(true);
     };
+
+    const renderAbc = () =>
+    {
+        return (
+            <div className='advance-select'>
+                {valueList.map((id) => (
+                    <div
+                        key={id}
+                        className='value-list'
+                    >{t(options[parseInt(id) - 1].label)}
+                        <button
+                            className='deselect-btn button--red '
+                            onClick={(e) =>
+                            {
+                                deselectItemHandler(id);
+                                e.stopPropagation();
+                            }}
+                        >
+                            <AiOutlineClose />
+                        </button>
+                    </div>
+                ))}
+                <input
+                    className='input-select advance-select__input advance-select__input--active advance-select__input--inactive'
+                    type='text'
+                    placeholder={t(placeholder)}
+                    tabIndex={0}
+                    onChange={textInputHandle}
+                    onKeyDown={handleKeyDown}
+                />
+            </div>
+        );
+    };
+
     return (
         <div
             ref = {selectRef}
@@ -168,40 +202,15 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
                     }}
                 >
                     {isMultiple
-                        ? (
-                            <div className='select-content'>
-                                {valueList.map((id) => (
-                                    <div
-                                        key={id}
-                                        className='value-list'
-                                    >{t(options[parseInt(id) - 1].label)}
-                                        <button
-                                            className='deselect-btn'
-                                            onClick={(e) =>
-                                            {
-                                                deselectItemHandler(id);
-                                                e.stopPropagation();
-                                            }}
-                                        > <AiOutlineClose />
-                                        </button>
-                                    </div>
-                                ))}
-                                <input
-                                    className='input-select'
-                                    type='text'
-                                    placeholder={valueList.length === 0 ? (placeholder ? t(placeholder) : '') : ''}
-                                    tabIndex={0}
-                                    onChange={textInputHandle}
-                                    onKeyDown={handleKeyDown}
-                                />
-                            </div>
-                        )
+                        ? renderAbc()
                         : (
-                            <div>{valueList.length > 0 ? showOptions[parseInt(valueList[0]) - 1].label : <></>}
+                            <div>
+                                {/* {valueList.length > 0 ? showOptions[parseInt(valueList[0]) - 1].label : <></>} */}
+                                {valueList.length > 0 && showOptions[parseInt(valueList[0]) - 1].label}
                                 <input
                                     className='input-select'
                                     type='text'
-                                    placeholder={valueList.length === 0 ? (placeholder ? t(placeholder) : '') : ''}
+                                    placeholder={t(placeholder)}
                                     tabIndex={0}
                                     onChange={textInputHandle}
                                     onKeyDown={handleKeyDown}
@@ -211,15 +220,14 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
                     }
                     <div className='select-icon'>
                         {
-                            valueList.length !== 0
-                                ? (
-                                    <button
-                                        className='clear-btn'
-                                        onClick={clearItemHandler}
-                                    > <AiOutlineClose color={theme === 'dark' ? '#fff' : '#000'} />
-                                    </button>
-                                )
-                                : <> </>
+                            valueList.length !== 0 && (
+                                <button
+                                    className='clear-btn'
+                                    onClick={clearItemHandler}
+                                >
+                                    <AiOutlineClose color={theme === 'dark' ? '#fff' : '#000'} />
+                                </button>
+                            )
                         }
                         {
                             dropdownMenuVisible ? <BsCaretUp /> : <BsCaretDown />
@@ -228,31 +236,28 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
                 </div>
             </div>
             {
-                dropdownMenuVisible
-                    ? (
-                        <div
-                            className='select-items'
-                            style={showOptions.length === 0 ? { display: 'none' } : {}}
-                        >
-                            {showOptions.map(({ id, label }) => (
-                                <div
-                                    key={id}
-                                    className='item'
-                                    style={{ backgroundColor: focusedIndex > 0 ? (id === showOptions[focusedIndex - 1].id ? 'rgba(0,0,0,0.1)' : '') : '' }}
-                                    onClick={() => itemClickHandler(id)}
-                                    onMouseEnter={() => setFocusIndex(parseInt(id))}
-                                >
-                                    <div className='item-tick'>
-                                        {
-                                            valueList.find(element => element === id) ? <BsCheck size="100%" /> : <></>
-                                        }
-                                    </div>
-                                    <p>{t(label)}</p>
+                dropdownMenuVisible && (
+                    <div
+                        className='select-items'
+                        style={showOptions.length === 0 ? { display: 'none' } : {}}
+                    >
+                        {showOptions.map(({ id, label }) => (
+                            <div
+                                key={id}
+                                className={`item ${focusedIndex > 0 && id === showOptions[focusedIndex - 1].id && 'item--focus'}`}
+                                style={{ backgroundColor: focusedIndex > 0 ? (id === showOptions[focusedIndex - 1].id ? 'rgba(64, 196, 255,0.3)' : '') : '' }}
+                                onClick={() => itemClickHandler(id)}
+                            >
+                                <div className='item-tick'>
+                                    {
+                                        valueList.find(element => element === id) ? <BsCheck size="100%" /> : <></>
+                                    }
                                 </div>
-                            ))}
-                        </div>
-                    )
-                    : <></>
+                                <p>{t(label)}</p>
+                            </div>
+                        ))}
+                    </div>
+                )
             }
 
         </div>

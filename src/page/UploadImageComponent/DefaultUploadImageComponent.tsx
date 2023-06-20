@@ -1,8 +1,8 @@
 import React from 'react';
-import UploadImage from '../components/UploadImage/UploadImage';
-import '.././App.css';
-import { useLanguage } from '../translate/LanguageTheme';
-const UploadImageComponent: React.FC = () =>
+import UploadImage from '../../components/UploadImage/UploadImage';
+import '../../App.css';
+import { useLanguage } from '../../translate/LanguageTheme';
+const DefaultUploadImageComponent: React.FC = () =>
 {
     const { t } = useLanguage();
 
@@ -16,4 +16,4 @@ const UploadImageComponent: React.FC = () =>
     );
 };
 
-export default UploadImageComponent;
+export default DefaultUploadImageComponent;

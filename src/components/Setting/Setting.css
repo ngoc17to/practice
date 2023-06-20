@@ -29,6 +29,8 @@
     display: flex;
     justify-content: flex-end;
     overflow: hidden;
+    position: fixed;
+    z-index: 1000;
 }
 .setting-overlay{
     position: absolute;
@@ -37,13 +39,15 @@
     z-index: 999;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0,0,0,0.3);;
+    background-color: rgba(0,0,0,0.3);
+    position: fixed;
 }
 .setting-wrapper{
     z-index: 1000;
     width: fit-content;
     height: fit-content;
     animation: slide linear 0.15s;
+    position: fixed;
 }
   
 .setting{
@@ -82,14 +86,24 @@
     width: 100%;
     margin-bottom: 10px;
 }
+
 .mode{
     display: flex;
     width: 100%;
 }
+
+.mode button:first-child {
+    border-radius: 10px 0 0 10px
+}
+
+.mode button:last-child {
+    border-radius: 0 10px 10px 0;
+    border-left: 0;
+}
+
 .setting-btn{
     height: 45px;
     width: 100%;
-    border-radius: 10px 0 0 10px;
     border: 1px solid var(--border-line-color);
     background-color: var(--setting-btn-color);
     display: flex;

@@ -6,11 +6,14 @@ type LanguageContextReturnType = {
     t: (text: string) => string
 }
 
+type LanguageType = () => LanguageContextReturnType
+
 const LanguageContext = createContext<LanguageContextReturnType>({} as LanguageContextReturnType);
 
 const LanguageProvider: React.FC<PropsWithChildren> = ({ children }) =>
 {
     const intialLanguage = localStorage.getItem('MYAPP_LANGUAGE');
+
     const [language, setLanguage] = useState<string>((intialLanguage === null) ? 'vi' : intialLanguage);
 
     useEffect(() =>
@@ -21,7 +24,9 @@ const LanguageProvider: React.FC<PropsWithChildren> = ({ children }) =>
     const t = (text: string) =>
     {
         if (language === 'vi') {return text;}
+
         let loadedLanguage: Record<string, string> = {};
+
         try
         {
             loadedLanguage = require(`./languages/${language}.json`);
@@ -31,13 +36,7 @@ const LanguageProvider: React.FC<PropsWithChildren> = ({ children }) =>
             console.log('Error:', e);
         }
                             
-        if (text in loadedLanguage)
-        {
-            return loadedLanguage[text];
-        }
-    
-        return text;
-
+        return loadedLanguage[text] || text;
     };
 
     return (
@@ -46,8 +45,8 @@ const LanguageProvider: React.FC<PropsWithChildren> = ({ children }) =>
         </LanguageContext.Provider>
     );
 };
-type useLanguageType = () => LanguageContextReturnType
-const useLanguage: useLanguageType = () =>
+
+const useLanguage: LanguageType = () =>
 {
     const context = useContext(LanguageContext);
     return context;

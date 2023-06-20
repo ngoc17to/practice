@@ -6,68 +6,47 @@ import logo from '../../img/logo.png';
 import { BsList, BsCaretLeft } from 'react-icons/bs';
 import { useTheme } from '../../ThemeContext';
 import Setting from '../../components/Setting/Setting';
-type ComponentMenuProps = {
-    menuVisible: boolean
-    setMenuVisible: (menuVisible: boolean) => void
-}
-const ComponentMenu: React.FC<ComponentMenuProps> = ({ menuVisible, setMenuVisible }) =>
+import ComponentList from './ComponentList';
+import useModal from '../../hooks/useModal';
+import ResponsiveMenu from './ResponsiveMenu';
+
+
+const ComponentMenu: React.FC = () =>
 {
-    const [selectedComponent, setSelectedComponent] = useState<string>('Modal');
-
+    const { show, modalVisible } = useModal();
     const { theme } = useTheme();
-
-    const componentList: {id: string, component: string}[] = [
-        { id: 'modal', component: 'Modal' },
-        { id: 'toast', component: 'Toast' },
-        { id: 'uploadimage', component: 'UploadImage' },
-        { id: 'advanceselect', component: 'AdvanceSelect' },
-    ];
 
     return (
         <div>
             <div className='navbar'>
                 <button
                     className="menu-button"
-                    onClick={() => setMenuVisible(true)}
+                    onClick={show}
                 >
                     <BsList
                         size='100%'
                         color={theme === 'dark' ? '#fff' : '#000'}
                     />
                 </button>
+
                 <div className='navbar-right'>
                     <img
                         src={logo}
                         alt='app-logo'
                     />
-            My Component
+                    My Component
                     <Setting />
                 </div>
             </div>
-            <div
-                className={`component-menu ${menuVisible && 'show-menu'}`}
-            >
-                <div className='app-title'>
-                    <img
-                        src={logo}
-                        alt='app-logo'
-                    />
-                    <h3>My Component</h3>
-                </div>
-                <div className='component-list'>
-                    <p>COMPONENTS</p>
-                    <ul>
-                        {componentList.map(({ id, component }) => (
-                            <li
-                                key={id}
-                                style={selectedComponent === component ? { color: 'rgb(241, 245, 249)', backgroundColor: 'rgb(0, 145, 234)', fontWeight: 'bolder' } : {}}
-                                onClick={() => setSelectedComponent(component)}
-                            ><Link to={`/${id}`}>{component}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+
+            <div className="component-menu">
+                <ComponentList />
             </div>
+
+            <ResponsiveMenu
+                hide={show}
+                modalVisible={modalVisible}
+            />
             
         </div>
     );
