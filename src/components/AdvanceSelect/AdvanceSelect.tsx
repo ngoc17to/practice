@@ -102,6 +102,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
 
         setShowOptions(filterOption);
         setMessage(event.target.value);
+        setFocusIndex(0);
     };
 
     const deselectItemHandler = (id: string) =>
@@ -125,9 +126,12 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
         // move up
         if (key === 'ArrowUp')
         {
-            nextIndexCount = (focusedIndex + showOptions.length - 1) % (showOptions.length);
-            
-            if (nextIndexCount === 0) {nextIndexCount = showOptions.length;}
+            if (focusedIndex === 0) {nextIndexCount = showOptions.length;}
+            else
+            {
+                nextIndexCount = (focusedIndex + showOptions.length - 1) % (showOptions.length);
+                if (nextIndexCount === 0) {nextIndexCount = showOptions.length;}
+            }
             setFocusIndex(nextIndexCount);
         }
 
@@ -137,7 +141,7 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
             {
                 itemClickHandler(showOptions[focusedIndex - 1].id);
             }
-            setFocusIndex(focusedIndex);
+            setFocusIndex(0);
         }
 
         if (key === 'Backspace')
@@ -155,14 +159,14 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
     const renderAbc = () =>
     {
         return (
-            <div className='advance-select'>
+            <div className='select-content'>
                 {valueList.map((id) => (
                     <div
                         key={id}
                         className='value-list'
                     >{t(options[parseInt(id) - 1].label)}
                         <button
-                            className='deselect-btn button--red '
+                            className='deselect-btn'
                             onClick={(e) =>
                             {
                                 deselectItemHandler(id);
@@ -174,9 +178,9 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
                     </div>
                 ))}
                 <input
-                    className='input-select advance-select__input advance-select__input--active advance-select__input--inactive'
+                    className='input-select'
                     type='text'
-                    placeholder={t(placeholder)}
+                    placeholder={valueList.length === 0 ? t(placeholder) : ''}
                     tabIndex={0}
                     onChange={textInputHandle}
                     onKeyDown={handleKeyDown}
@@ -204,13 +208,12 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
                     {isMultiple
                         ? renderAbc()
                         : (
-                            <div>
-                                {/* {valueList.length > 0 ? showOptions[parseInt(valueList[0]) - 1].label : <></>} */}
-                                {valueList.length > 0 && showOptions[parseInt(valueList[0]) - 1].label}
+                            <div className='select-content'>
+                                {valueList.length > 0 && options[parseInt(valueList[0]) - 1].label}
                                 <input
                                     className='input-select'
                                     type='text'
-                                    placeholder={t(placeholder)}
+                                    placeholder={valueList.length === 0 ? t(placeholder) : ''}
                                     tabIndex={0}
                                     onChange={textInputHandle}
                                     onKeyDown={handleKeyDown}
@@ -245,7 +248,6 @@ const AdvanceSelect: React.FC<AdvanceSelectProps> = (props) =>
                             <div
                                 key={id}
                                 className={`item ${focusedIndex > 0 && id === showOptions[focusedIndex - 1].id && 'item--focus'}`}
-                                style={{ backgroundColor: focusedIndex > 0 ? (id === showOptions[focusedIndex - 1].id ? 'rgba(64, 196, 255,0.3)' : '') : '' }}
                                 onClick={() => itemClickHandler(id)}
                             >
                                 <div className='item-tick'>

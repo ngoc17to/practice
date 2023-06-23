@@ -21,7 +21,6 @@
 }
 
 .setting-container{
-    position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
@@ -33,7 +32,6 @@
     z-index: 1000;
 }
 .setting-overlay{
-    position: absolute;
     top: 0;
     left: 0;
     z-index: 999;

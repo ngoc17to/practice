@@ -31,40 +31,37 @@ const Toast: React.FC<ToastProps> = ({ toastList, deleteToast }) =>
         }
     };
 
-    if (toastList !== null)
-    {
-        return (
-            ReactDOM.createPortal(
-                <div className="toast-container">
-                    <div className="toast-wrapper">
-                        {toastList.map(({ message, type, id }) => (
-                            <div
-                                key={id}
-                                className={type}
-                            >
-                                <div className='toast-icon'>
-                                    {renderIcon(type)}
-                                </div>
-
-                                <p>{t(message)}</p>
-
-                                <button
-                                    className="toast-close-button"
-                                    onClick={() => deleteToast(id)}
-                                >
-                                    <AiOutlineClose
-                                        size="100%"
-                                        className='app-icon'
-                                    />
-                                </button>
+    if (toastList === null) {return (<></>);}
+    return (
+        ReactDOM.createPortal(
+            <div className="toast-container">
+                <div className="toast-wrapper">
+                    {toastList.map(({ message, type, id }) => (
+                        <div
+                            key={id}
+                            className={type}
+                        >
+                            <div className='toast-icon'>
+                                {renderIcon(type)}
                             </div>
-                        ))}
-                    </div>
-                </div>, document.body,
-            )
-        );
-    }
-    else {return (<></>);}
+
+                            <p>{t(message)}</p>
+
+                            <button
+                                className="toast-close-button"
+                                onClick={() => deleteToast(id)}
+                            >
+                                <AiOutlineClose
+                                    size="100%"
+                                    className='app-icon'
+                                />
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            </div>, document.body,
+        )
+    );
 };
 export default Toast;
 

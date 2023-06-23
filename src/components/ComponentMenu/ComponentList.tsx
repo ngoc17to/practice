@@ -13,6 +13,7 @@ const ComponentList: React.FC = () =>
 
     const [selectedComponent, setSelectedComponent] = useState<string>(intialComponent || 'modal');
     const [selectedChild, setSelectedChild] = useState<string>(intialChild || 'Confirm');
+    const [showChildren, setShowChildren] = useState(false);
 
     const componentList = [
         { id: 'modal', component: 'Modal', children: ['Confirm', 'Alert'] },
@@ -35,6 +36,8 @@ const ComponentList: React.FC = () =>
     {
         setSelectedComponent(id);
         setSelectedChild(selected);
+        if (id === selectedComponent) {setShowChildren(!showChildren);}
+        console.log(showChildren);
     };
 
     return (
@@ -55,14 +58,18 @@ const ComponentList: React.FC = () =>
                             to={`/${id}${children.length > 0 ? `${children[0]}` : ''}`}
                         >
                             <li
+                                className='component-list__item'
                                 style={selectedComponent === id ? { backgroundColor: 'rgb(239,249,255)' } : {}}
                                 onClick={() => handleItemClick(id, children[0])}
                             >
-                                {selectedComponent === id ? <BsFillCaretDownFill /> : <BsFillCaretRightFill />}
+                                {selectedComponent === id
+                                    ? <BsFillCaretDownFill className='icon component-list__icon' />
+                                    : <BsFillCaretRightFill className='icon component-list__icon' />}
+
                                 {component}
                             </li>
                             {
-                                selectedComponent === id && (
+                                selectedComponent === id && showChildren && (
                                     <ul>
                                         {children.map((element) => (
                                             <Link
@@ -71,7 +78,7 @@ const ComponentList: React.FC = () =>
                                             >
                                                 <li
                                                     style={selectedChild === element ? { color: 'rgb(0,127,255)', backgroundColor: 'rgba(64, 196, 255, 0.2)' } : {}}
-                                                    onClick={() => handleItemClick(id, element)}
+                                                    onClick={() => setSelectedChild(element)}
                                                 >
                                                     {element}
                                                 </li>
